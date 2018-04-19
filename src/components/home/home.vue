@@ -6,14 +6,18 @@
     </el-breadcrumb>
     <el-row>
       <el-col :span="12">
-        <el-dropdown trigger="click" >
+        <el-dropdown trigger="click" @command="handleCommand" >
           <el-button size="medium" type="primary">
-            分类<i class="el-icon-arrow-down el-icon--right"></i>
+            {{title}}<i class="el-icon-arrow-down el-icon--right"></i>
           </el-button>
-          <el-dropdown-menu style="left:250px;top:175px;" slot="dropdown">
-            <el-dropdown-item>轮播图</el-dropdown-item>
-            <el-dropdown-item>活动</el-dropdown-item>
-            <el-dropdown-item>新闻</el-dropdown-item>
+          <el-dropdown-menu
+           style="left:250px;top:175px;" slot="dropdown">
+            <el-dropdown-item
+            v-for="item in category" :key="item.name"
+            :command="item.name"
+            label="商品ID">
+             {{item.name}}
+             </el-dropdown-item>
           </el-dropdown-menu>
         </el-dropdown>
         <router-link to="/edit">
@@ -26,7 +30,7 @@
     <el-table
       stripe
       height="500"
-      :data="bannerData"
+      :data="indexData"
       style="width: 100%;overflow-x:scroll;">
       <el-table-column
       type="selection"
@@ -35,13 +39,13 @@
     </el-table-column>
       <el-table-column
         prop="Id"
-        label="商品ID"
+        label="序号ID"
         sortable
         width="180">
       </el-table-column>
       <el-table-column
         prop="name"
-        label="商品名称"
+        label="标题"
         width="180">
       </el-table-column>
       <el-table-column
@@ -80,14 +84,16 @@ export default {
   name: 'HelloWorld',
   data () {
     return {
-      bannerData: []
+      title: '轮播图',
+      category: [{'name': '轮播图'}, {'name': '活动'}, {'name': '新闻'}],
+      indexData: []
     }
   },
   created () {
-    this.getData()
+    this.getBannerData()
   },
   methods: {
-    getData () {
+    getBannerData () {
       let that = this
       this.$http.get(`${this.$hostname}/getbanner`).then(function (res) {
         // console.log(res.data.bannerData)
@@ -95,7 +101,20 @@ export default {
         bannerData.forEach(el => {
           el.desc = el.imgUrl
         })
-        that.bannerData = bannerData
+        that.indexData = bannerData
+      }).catch(function (res) {
+        console.log(res)
+      })
+    },
+    getNewsData () {
+      let that = this
+      this.$http.get(`${this.$hostname}/getnews`).then(function (res) {
+        // console.log(res.data.bannerData)
+        let newsData = res.data.newsData
+        newsData.forEach(el => {
+          el.name = el.title
+        })
+        that.indexData = newsData
       }).catch(function (res) {
         console.log(res)
       })
@@ -123,6 +142,15 @@ export default {
       }).catch(err => {
         console.log(err)
       })
+    },
+    handleCommand (command) {
+      // this.$message('click on item ' + command)
+      this.title = command
+      if (command === '轮播图') {
+        this.getBannerData()
+      } else if (command === '新闻') {
+        this.getNewsData()
+      }
     }
   }
 }
