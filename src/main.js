@@ -5,6 +5,10 @@ import App from './App'
 import router from './router'
 import Element from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
+import axios from 'axios'
+Vue.prototype.$hostname = 'http://localhost:3003'
+Vue.prototype.$http = axios
+
 Vue.use(Element)
 
 Vue.config.productionTip = false
