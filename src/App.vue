@@ -10,7 +10,7 @@
         <el-aside width="200px">
           <el-row class="tac">
             <el-col :span="24">
-              <el-menu default-active="1-1" class="el-menu-vertical-demo" @open="handleOpen" @close="handleClose" background-color="#545c64" text-color="#fff" active-text-color="#00877C">
+              <el-menu  class="el-menu-vertical-demo" @select="handleSelect" @open="handleOpen" @close="handleClose" background-color="#545c64" text-color="#fff" active-text-color="#00877C">
                 <el-submenu index="1">
                   <template slot="title">
                     <i class="el-icon-location"></i>
@@ -20,7 +20,7 @@
                     <router-link to="/">
                       <el-menu-item index="1-1">内容管理</el-menu-item>
                     </router-link>
-                    <router-link to="/category">
+                    <router-link to="/category/home">
                       <el-menu-item index="1-2">分类管理</el-menu-item>
                     </router-link>
                   </el-menu-item-group>
@@ -34,7 +34,7 @@
                     <router-link to="/mall">
                       <el-menu-item index="2-1">内容管理</el-menu-item>
                     </router-link>
-                    <router-link to="/category">
+                    <router-link to="/category/mall">
                       <el-menu-item index="2-2">分类管理</el-menu-item>
                     </router-link>
                   </el-menu-item-group>
@@ -48,7 +48,7 @@
                     <router-link to="/blog">
                       <el-menu-item index="3-1">内容管理</el-menu-item>
                     </router-link>
-                    <router-link to="/category">
+                    <router-link to="/category/blog">
                       <el-menu-item index="3-2">分类管理</el-menu-item>
                     </router-link>
                   </el-menu-item-group>
@@ -87,10 +87,13 @@
 export default {
   methods: {
     handleOpen (key, keyPath) {
-      console.log(key, keyPath)
+      // console.log(key, keyPath)
     },
     handleClose (key, keyPath) {
-      console.log(key, keyPath)
+      // console.log(key, keyPath)
+    },
+    handleSelect (key, keyPath) {
+      // console.log(this.$route)
     }
   }
 }
