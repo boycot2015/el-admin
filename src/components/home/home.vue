@@ -121,7 +121,7 @@ export default {
     },
     handleEdit (index, row) {
       // console.log(index, row)
-      this.$router.push('/edit')
+      this.$router.push('/edit?id='+row.Id)
     },
     handleDelete (index, row) {
       // console.log(index, row)

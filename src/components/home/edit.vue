@@ -18,7 +18,7 @@
         </el-col>
       </el-form-item>
       <el-form-item label="是否显示" prop="type">
-        <el-checkbox-group v-model="ruleForm.type">
+        <el-checkbox-group  v-model="ruleForm.type[0]">
           <el-checkbox name="type"></el-checkbox>
         </el-checkbox-group>
       </el-form-item>
@@ -51,7 +51,7 @@
 export default {
   data () {
     return {
-      fileList2: [{name: 'food.jpeg', url: 'https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100'}, {name: 'food2.jpeg', url: 'https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100'}],
+      fileList2: [],
       ruleForm: {
         name: '',
         region: '',
@@ -82,7 +82,25 @@ export default {
       }
     }
   },
+  created(){
+    if(this.$route.query.id){
+      this.getData();
+    }
+  },
   methods: {
+    getData(){
+        this.$http.get(`${this.$hostname}/getbanner?id=${this.$route.query.id}`).then(res=>{
+          // console.log(res.data);
+          let bannerData = res.data.bannerData;
+          this.ruleForm.name = bannerData.name;
+          if(bannerData.typeId==='0'){
+            this.ruleForm.region = '轮播图';
+          }
+          this.ruleForm.desc = bannerData.imgUrl;
+          this.ruleForm.type.push(bannerData.isShow);
+          this.fileList2.push({name:bannerData.name,url:`${this.$hostname}${bannerData.imgUrl}`});
+        })
+    },
     submitForm (formName) {
       this.$refs[formName].validate((valid) => {
         if (valid) {
