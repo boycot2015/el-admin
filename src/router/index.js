@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import Home from '@/components/home/home'
+import About from '@/components/about/about'
 import HomeEdit from '@/components/home/edit'
 import Blog from '@/components/blog/blog'
 import BlogEdit from '@/components/blog/edit'
@@ -26,6 +27,10 @@ export default new Router({
       path: '/blog',
       name: 'Blog',
       component: Blog
+    }, {
+      path: '/about',
+      name: 'About',
+      component: About
     }, {
       path: '/edit',
       name: 'BlogEdit',
