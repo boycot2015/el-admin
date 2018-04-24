@@ -12,14 +12,14 @@
       </el-form-item>
       <el-form-item label="发布时间" required>
         <el-col :span="8">
-          <el-form-item prop="date1">
-            <el-date-picker type="date" placeholder="选择日期" v-model="formData.date1" style="width: 100%;"></el-date-picker>
+          <el-form-item prop="date">
+            <el-date-picker type="date" placeholder="选择日期" v-model="formData.date" style="width: 100%;"></el-date-picker>
           </el-form-item>
         </el-col>
       </el-form-item>
-      <el-form-item label="是否显示" prop="type">
-        <el-checkbox-group  v-model="formData.type[0]">
-          <el-checkbox name="type"></el-checkbox>
+      <el-form-item label="是否显示" prop="isShow">
+        <el-checkbox-group  v-model="formData.isShow">
+          <el-checkbox name="isShow"></el-checkbox>
         </el-checkbox-group>
       </el-form-item>
       <el-form-item label="描述" prop="desc">
@@ -30,7 +30,6 @@
         ref="upload"
         style="width: 30%;margin-right:20px;"
         class="upload"
-        :auto-upload="false"
         :action="uploadPath"
         :on-preview="handlePreview"
         :on-remove="handleRemove"
@@ -42,14 +41,14 @@
       </el-form-item>
       <el-form-item>
         <el-button type="primary" @click="submitForm('formData')">完成</el-button>
-        <el-button @click="resetForm('formData')">取消</el-button>
+        <el-button @click="cancelEdit">取消</el-button>
       </el-form-item>
     </el-form>
   </div>
 </template>
 
 <script>
-
+import qs from 'qs'
 export default {
   data () {
     return {
@@ -58,10 +57,9 @@ export default {
       formData: {
         name: '',
         classfy: '',
-        date1: '',
-        date2: '',
+        date: '',
         delivery: false,
-        type: [],
+        isShow: false,
         resource: '',
         desc: ''
       },
@@ -73,7 +71,7 @@ export default {
         classfy: [
           { required: true, message: '请选择分类', trigger: 'change' }
         ],
-        date1: [
+        date: [
           { type: 'date', required: true, message: '请选择日期', trigger: 'change' }
         ],
         desc: [
@@ -116,22 +114,40 @@ export default {
           this.formData.desc = renderData.desc;          
         }
         this.upfiles.push({name:renderData.name,url:`${this.$hostname}${renderData.imgUrl}`});
-        this.formData.type.push(renderData.isShow);
+        this.formData.isShow = renderData.isShow;
       })
     },
     submitForm (formName) {
       this.$refs[formName].validate((valid) => {
         if (valid) {
-          this.$refs.upload.submit(this.formData);
-          console.log(this.formData,this.upfiles)
+          let pathName = ``;
+          if(this.$route.query.typeId==='0'){
+            pathName = `${this.$hostname}/updatebanner?id=${this.$route.query.id}`
+          }else{
+            pathName = `${this.$hostname}/updatenews?id=${this.$route.query.id}`
+          }
+          this.$http.post(pathName,qs.stringify(this.formData),{
+            headers: {
+                'Content-Type':'application/x-www-form-urlencoded; charset=UTF-8'
+              }
+          })
+          .then(res=> {
+            if(res.data.code==200){
+              this.$router.go(-1);
+            }
+          })
+          .catch(function (error) {
+            console.log(error);
+          })
+          // this.$refs.upload.submit();
         } else {
           console.log('error submit!!')
           return false
         }
       })
     },
-    resetForm (formName) {
-      this.$refs[formName].resetFields()
+    cancelEdit () {
+      this.$router.go(-1);
     },
     handleRemove (file, fileList) {
       console.log(file, fileList)
