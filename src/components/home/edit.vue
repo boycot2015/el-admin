@@ -123,7 +123,7 @@ export default {
           let pathName = ``;
           if(this.$route.query.typeId==='0'){
             pathName = `${this.$hostname}/updatebanner?id=${this.$route.query.id}`
-          }else{
+          }else if(this.$route.query.typeId==='1'){
             pathName = `${this.$hostname}/updatenews?id=${this.$route.query.id}`
           }
           this.$http.post(pathName,qs.stringify(this.formData),{

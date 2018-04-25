@@ -30,7 +30,7 @@
     <el-table
       stripe
       height="500"
-      :data="indexData"
+      :data="goodsData"
       style="width: 100%;overflow-x:scroll;">
       <el-table-column
       type="selection"
@@ -38,7 +38,7 @@
       width="55">
     </el-table-column>
       <el-table-column
-        prop="Id"
+        prop="id"
         label="序号ID"
         sortable
         width="180">
@@ -83,44 +83,51 @@
 export default {
   data () {
     return {
-      title: '轮播图',
-      category: [{'name': '轮播图'}, {'name': '活动'}, {'name': '新闻'}],
-      indexData: []
+      title: '全部',
+      category: [{'name': '全部'},{'name': '手机'}, {'name': '配件'}],
+      goodsData: []
     }
   },
   created () {
-    this.getBannerData()
+    this.getgoodsData()
   },
   methods: {
-    getBannerData () {
+    getPhoneData () {
       let that = this
-      this.$http.get(`${this.$hostname}/getbanner`).then(function (res) {
-        // console.log(res.data.bannerData)
-        let bannerData = res.data.bannerData
-        bannerData.forEach(el => {
-          el.desc = el.imgUrl
-        })
-        that.indexData = bannerData
+      this.$http.get(`${this.$hostname}/getgoodsdata`).then(function (res) {
+        // console.log(res.data.goodsData)
+        let phoneData = res.data.goodsData
+        that.goodsData = phoneData
       }).catch(function (res) {
         console.log(res)
       })
     },
-    getNewsData () {
+    getSuitData () {
       let that = this
-      this.$http.get(`${this.$hostname}/getnews`).then(function (res) {
+      this.$http.get(`${this.$hostname}/getgoodsdata`).then(function (res) {
+        // console.log(res.data.suitData)
+        let getSuitData = res.data.suitData
+        that.goodsData = getSuitData
+      }).catch(function (res) {
+        console.log(res)
+      })
+    },
+    getgoodsData () {
+      let that = this
+      this.$http.get(`${this.$hostname}/getgoodsdata`).then(function (res) {
         // console.log(res.data)
-        let newsData = res.data.newsData
-        newsData.forEach(el => {
-          el.name = el.title
+        let goodsData = res.data.goodsData.concat(res.data.suitData)
+        goodsData.forEach((e,i)=>{
+          e.id = i+1;
         })
-        that.indexData = newsData
+        that.goodsData = goodsData
       }).catch(function (res) {
         console.log(res)
       })
     },
     handleEdit (index, row) {
       // console.log(index, row)
-      this.$router.push('/edit')
+      this.$router.push(`/mall/edit?id=${row.Id}&typeId=${row.typeId}`)
     },
     handleDelete (index, row) {
       // console.log(index, row)
@@ -150,12 +157,13 @@ export default {
       }
     },
     handleCommand (command) {
-      // this.$message('click on item ' + command)
       this.title = command
-      if (command === '轮播图') {
-        this.getBannerData()
-      } else if (command === '新闻') {
-        this.getNewsData()
+      if (command === '手机') {
+        this.getPhoneData()
+      } else if (command === '配件') {
+        this.getSuitData()
+      }else{
+        this.getgoodsData()
       }
     }
   }

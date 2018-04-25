@@ -32,7 +32,7 @@ export default new Router({
       name: 'About',
       component: About
     }, {
-      path: '/edit',
+      path: '/blog/edit',
       name: 'BlogEdit',
       component: BlogEdit
     }, {
@@ -40,7 +40,7 @@ export default new Router({
       name: 'Mall',
       component: Mall
     }, {
-      path: '/edit',
+      path: '/mall/edit',
       name: 'MallEdit',
       component: MallEdit
     }, {

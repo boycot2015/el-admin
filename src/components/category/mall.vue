@@ -37,31 +37,22 @@ export default {
   methods: {
     getData() {
       let id = this.$route.query.id;
-      let path1 = `${this.$hostname}/getbanner`;
-      let path2 = `${this.$hostname}/getnews`;
-      this.$http.get(path1).then(res1 => {
-        let typeId = res1.data.bannerData[0].typeId;
-        let bannerData = res1.data.bannerData;
+      let path = `${this.$hostname}/getgoodsdata`;
+      this.$http.get(path).then(res => {
+        let goodsData = res.data.goodsData;
+        let suitData = res.data.suitData;
         let isShow = "false";
-        bannerData.forEach(el => {
+        goodsData.forEach(el => {
           if (el.isShow === "true") {
             isShow = "true";
           }
         });
-        this.categoryData.push({ Id: 1, name: "轮播图", isShow, typeId });
-        this.$http.get(path2).then(res2 => {
-          let typeId = res2.data.newsData[0].typeId;
-          let newsData = res2.data.newsData;
-          let isShow = "false";
-          newsData.forEach(el => {
-            if (el.isShow === "true") {
-              isShow = "true";
-            }
-          });
-          if (typeId === "1") {
-            this.categoryData.push({ Id: 2, name: "新闻", isShow, typeId });
+        suitData.forEach(el => {
+          if (el.isShow === "true") {
+            isShow = "true";
           }
         });
+        this.categoryData.push({ Id: 1, name: "手机", isShow, typeId:goodsData[0].typeId },{ Id: 2, name: "配件", isShow, typeId:suitData[0].typeId });
       });
     },
     handleEdit(index, row) {
