@@ -97,7 +97,7 @@ export default {
       this.uploadPath = `${this.$hostname}${uploadPath}?id=${this.$route.query.id}`;
       let path = `${this.$hostname}${pathName}?id=${this.$route.query.id}`;
       this.$http.get(path).then(res=>{
-        console.log(res);
+        // console.log(res);
           let renderData = {};
           if(this.$route.query.typeId==='5'){
             renderData = res.data.goodsData;
@@ -105,14 +105,13 @@ export default {
             renderData = res.data.suitData;
           }
         if(renderData.typeId==='5'){
-          this.formData.name = renderData.name;
           this.formData.desc = renderData.desc;          
           this.formData.classfy = '手机';
         }else{
-          this.formData.name = renderData.title;
           this.formData.classfy = '配件';
-          this.formData.desc = renderData.desc;          
+          this.formData.desc = JSON.parse(renderData.color).data[0].color;          
         }
+        this.formData.name = renderData.name;        
         this.upfiles.push({name:renderData.name,url:`${this.$hostname}${renderData.imgUrl[0]}`});
         this.formData.isShow = renderData.isShow;
       })

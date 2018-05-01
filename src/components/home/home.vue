@@ -20,7 +20,7 @@
              </el-dropdown-item>
           </el-dropdown-menu>
         </el-dropdown>
-        <router-link to="/edit">
+        <router-link to="/home/add">
           <el-button size="medium" type="primary">
               新增
           </el-button>

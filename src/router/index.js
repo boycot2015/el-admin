@@ -10,6 +10,9 @@ import MallEdit from '@/components/mall/edit'
 import HomeCategory from '@/components/category/home'
 import MallCategory from '@/components/category/mall'
 import BlogCategory from '@/components/category/blog'
+import HomeAdd from '@/components/home/add'
+import MallAdd from '@/components/mall/add'
+import BlogAdd from '@/components/blog/add'
 
 Vue.use(Router)
 
@@ -55,6 +58,18 @@ export default new Router({
       path: '/category/blog',
       name: 'BlogCategory',
       component: BlogCategory
+    }, {
+      path: '/home/add',
+      name: 'HomeAdd',
+      component: HomeAdd
+    }, {
+      path: '/home/add',
+      name: 'MallAdd',
+      component: MallAdd
+    }, {
+      path: '/home/add',
+      name: 'BlogAdd',
+      component: BlogAdd
     }
   ]
 })

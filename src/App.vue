@@ -164,6 +164,9 @@ a{
 .el-submenu .el-menu-item{
   width: 200px;
 }
+.el-menu-item.is-active{
+  background-color: #E9EEF3 !important;
+}
 .el-main {
   background-color: #e9eef3;
   color: #333;

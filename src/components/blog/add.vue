@@ -81,64 +81,12 @@ export default {
     }
   },
   created(){
-    this.formData.classfyData = [{id:1,name:'轮播图'},{id:2,name:'新闻'},{id:3,name:'手机'},{id:4,name:'配件'}]  
-    if(this.$route.query.id){
-      this.getData();
-    }
+    this.formData.classfyData = [{id:1,name:'轮播图'},{id:2,name:'新闻'},{id:3,name:'手机'},{id:4,name:'配件'}] 
   },
   methods: {
-    getData(){
-      let pathName = '',uploadPath =  '';
-      if(this.$route.query.typeId==='0'){
-        pathName = '/getbanner';
-        uploadPath = '/updatebanner'
-      }else{
-        pathName = '/getnews';
-        uploadPath = '/updatenews'
-      }
-      this.uploadPath = `${this.$hostname}${uploadPath}?id=${this.$route.query.id}`;
-      let path = `${this.$hostname}${pathName}?id=${this.$route.query.id}`;
-      this.$http.get(path).then(res=>{
-          let renderData = {};
-          if(res.data.bannerData){
-            renderData = res.data.bannerData;
-          }else{
-            renderData = res.data.newsData;
-          }
-        if(renderData.typeId==='0'){
-          this.formData.name = renderData.name;
-          this.formData.desc = renderData.imgUrl;          
-          this.formData.selected = '轮播图';
-        }else{
-          this.formData.name = renderData.title;
-          this.formData.selected = '新闻';
-          this.formData.desc = renderData.desc;          
-        }
-        this.upfiles.push({name:renderData.name,url:`${this.$hostname}${renderData.imgUrl}`});
-        this.formData.isShow = renderData.isShow;
-      })
-    },
-    addData(){
-      
-      switch (key) {
-        case value:
-          
-          break;
-      
-        default:
-          break;
-      }
-    },
     submitForm (formName) {
-      this.addData();
       this.$refs[formName].validate((valid) => {
         if (valid) {
-          let pathName = ``;
-          if(this.$route.query.typeId==='0'){
-            pathName = `${this.$hostname}/updatebanner?id=${this.$route.query.id}`
-          }else if(this.$route.query.typeId==='1'){
-            pathName = `${this.$hostname}/updatenews?id=${this.$route.query.id}`
-          }
           this.$http.post(pathName,qs.stringify(this.formData),{
             headers: {
                 'Content-Type':'application/x-www-form-urlencoded; charset=UTF-8'
