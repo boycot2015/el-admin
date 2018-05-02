@@ -9,7 +9,8 @@
           <el-option v-for="(item,index) in formData.classfyData" :key="index" :value="item.name"></el-option>
         </el-select>
       </el-form-item>
-      <el-form-item label="发布时间" required>
+     
+      <el-form-item label="发布时间">
         <el-col :span="8">
           <el-form-item prop="date">
             <el-date-picker type="date" placeholder="选择日期" v-model="formData.date" style="width: 100%;"></el-date-picker>
@@ -21,6 +22,25 @@
           <el-checkbox name="isShow"></el-checkbox>
         </el-checkbox-group>
       </el-form-item>
+      <el-form-item label="颜色" prop="color">
+        <el-select v-model="formData.selectedColor"  placeholder="请选择颜色">
+          <el-option v-for="(item,index) in formData.color" :key="index" :value="item.name"></el-option>
+        </el-select>
+      </el-form-item>
+      <el-form-item label="配置" prop="config">
+        <el-select v-model="formData.selectedConfig"  placeholder="请选择配置">
+          <el-option v-for="(item,index) in formData.config" :key="index" :value="item.name"></el-option>
+        </el-select>
+      </el-form-item>
+      <el-form-item label="网络" prop="network">
+        <el-input v-model="formData.network" size="small" class="name-inp"></el-input>
+      </el-form-item>
+      <el-form-item label="价格" prop="price">
+        <el-input v-model="formData.price" size="small" class="name-inp"></el-input>
+      </el-form-item>
+      <el-form-item label="原价格" prop="oldPrice">
+        <el-input v-model="formData.oldPrice" size="small" class="name-inp"></el-input>
+      </el-form-item>
       <el-form-item label="描述" prop="desc">
         <el-input type="textarea" v-model="formData.desc"></el-input>
       </el-form-item>
@@ -31,6 +51,7 @@
         class="upload"
         :action="uploadPath"
         :on-preview="handlePreview"
+        :on-success="handleCallback"
         :on-remove="handleRemove"
         :file-list="upfiles"
         list-type="picture">
@@ -54,14 +75,18 @@ export default {
       uploadPath:'',
       upfiles: [],
       formData: {
-        name: '',
-        classfyData:[],
-        selected: '',
-        date: '',
-        delivery: false,
-        isShow: false,
-        resource: '',
-        desc: ''
+      name: '',
+      filePath:'',
+      classfyData:[],
+      color:[],
+      selected: '',
+      selectedColor:'',
+      selectedConfig:'',
+      date: '',
+      isShow: false,
+      desc: '',
+      network:'',
+      config:[]
       },
       rules: {
         name: [
@@ -71,9 +96,6 @@ export default {
         selected: [
           { required: true, message: '请选择分类', trigger: 'change' }
         ],
-        date: [
-          { type: 'date', required: true, message: '请选择日期', trigger: 'change' }
-        ],
         desc: [
           { message: '请填写描述信息', trigger: 'blur' }
         ]
@@ -81,10 +103,14 @@ export default {
     }
   },
   created(){
-    this.formData.classfyData = [{id:1,name:'轮播图'},{id:2,name:'新闻'},{id:3,name:'手机'},{id:4,name:'配件'}] 
+    this.formData.classfyData = [{id:1,name:'手机'},{id:2,name:'配件'}];
+    this.formData.color = [{id:1,name:'黑色'},{id:2,name:'红色'},{id:3,name:'金色'},{id:4,name:'蓝色'},{id:5,name:'灰色'}];
+    this.formData.config = [{id:1,name:'2G+16G'},{id:2,name:'2G+16G'},{id:3,name:'2G+32G'},{id:4,name:'3G+32G'},{id:5,name:'4G+64G'}];
+    this.uploadPath = `${this.$hostname}/addphonedata`
   },
   methods: {
     submitForm (formName) {
+      let pathName = `${this.$hostname}/addphonedata`;
       this.$refs[formName].validate((valid) => {
         if (valid) {
           this.$http.post(pathName,qs.stringify(this.formData),{
@@ -115,6 +141,9 @@ export default {
     },
     handlePreview (file) {
       console.log(file)
+    },
+    handleCallback(res,file){
+      this.formData.filePath = res.filePath;
     }
   }
 }

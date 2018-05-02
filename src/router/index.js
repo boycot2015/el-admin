@@ -20,6 +20,10 @@ export default new Router({
   routes: [
     {
       path: '/',
+      redirect: '/home'
+    },
+    {
+      path: '/home',
       name: 'Home',
       component: Home
     }, {
@@ -63,7 +67,7 @@ export default new Router({
       name: 'HomeAdd',
       component: HomeAdd
     }, {
-      path: '/home/add',
+      path: '/mall/add',
       name: 'MallAdd',
       component: MallAdd
     }, {

@@ -127,6 +127,9 @@ export default {
       // console.log(index, row)
       this.$http.get(`${this.$hostname}/deletebanner?id=${row.Id}`).then(res => {
         // console.log(res)
+        if(res.data.code===200){
+          this.$router.push('/home');
+        }
       }).catch(err => {
         console.log(err)
       })

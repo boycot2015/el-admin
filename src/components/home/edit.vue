@@ -17,9 +17,7 @@
         </el-col>
       </el-form-item>
       <el-form-item label="是否显示" prop="isShow">
-        <el-checkbox-group  v-model="formData.isShow">
-          <el-checkbox name="isShow"></el-checkbox>
-        </el-checkbox-group>
+          <el-checkbox v-model="checked" name="isShow"></el-checkbox>
       </el-form-item>
       <el-form-item label="描述" prop="desc">
         <el-input type="textarea" v-model="formData.desc"></el-input>
@@ -51,17 +49,18 @@ import qs from 'qs'
 export default {
   data () {
     return {
+      checked:false,
       uploadPath:'',
       upfiles: [],
       formData: {
-        name: '',
-        classfyData:[],
-        selected: '',
-        date: '',
-        delivery: false,
-        isShow: false,
-        resource: '',
-        desc: ''
+      name: '',
+      classfyData:[],
+      selected: '',
+      date: '',
+      delivery: false,
+      isShow: false,
+      resource: '',
+      desc: ''
       },
       rules: {
         name: [
@@ -81,7 +80,7 @@ export default {
     }
   },
   created(){
-    this.formData.classfyData = [{id:1,name:'轮播图'},{id:2,name:'新闻'},{id:3,name:'手机'},{id:4,name:'配件'}]  
+    this.formData.classfyData = [{id:1,name:'轮播图'},{id:2,name:'新闻'}]  
     if(this.$route.query.id){
       this.getData();
     }
@@ -114,23 +113,12 @@ export default {
           this.formData.selected = '新闻';
           this.formData.desc = renderData.desc;          
         }
+        this.checked = renderData.isShow==='true'?true:false;        
         this.upfiles.push({name:renderData.name,url:`${this.$hostname}${renderData.imgUrl}`});
         this.formData.isShow = renderData.isShow;
       })
     },
-    addData(){
-      
-      switch (key) {
-        case value:
-          
-          break;
-      
-        default:
-          break;
-      }
-    },
     submitForm (formName) {
-      this.addData();
       this.$refs[formName].validate((valid) => {
         if (valid) {
           let pathName = ``;

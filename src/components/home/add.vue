@@ -31,6 +31,7 @@
         class="upload"
         :action="uploadPath"
         :on-preview="handlePreview"
+        :on-success="handleCallback"
         :on-remove="handleRemove"
         :file-list="upfiles"
         list-type="picture">
@@ -55,6 +56,7 @@ export default {
       upfiles: [],
       formData: {
       name: '',
+      filePath:'',
       classfyData:[],
       selected: '',
       date: '',
@@ -79,11 +81,12 @@ export default {
     }
   },
   created(){
-    this.formData.classfyData = [{id:1,name:'轮播图'},{id:2,name:'新闻'},{id:3,name:'手机'},{id:4,name:'配件'}] 
+    this.formData.classfyData = [{id:1,name:'轮播图'},{id:2,name:'新闻'}];
+    this.uploadPath = `${this.$hostname}/addbanner`
   },
   methods: {
     submitForm (formName) {
-      let pathName = `${this.$hostname}/addbanner`,uploadPath =  '';
+      let pathName = `${this.$hostname}/addbanner`;
       this.$refs[formName].validate((valid) => {
         if (valid) {
           this.$http.post(pathName,qs.stringify(this.formData),{
@@ -114,6 +117,9 @@ export default {
     },
     handlePreview (file) {
       console.log(file)
+    },
+    handleCallback(res,file){
+      this.formData.filePath = res.filePath;
     }
   }
 }
