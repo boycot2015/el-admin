@@ -36,29 +36,30 @@
       type="selection"
       :default-sort = "{prop: 'date', order: 'descending'}"
       width="55">
-    </el-table-column>
+      </el-table-column>
       <el-table-column
         prop="Id"
         label="序号ID"
         sortable
-        width="180">
+        width="80">
       </el-table-column>
       <el-table-column
         prop="name"
         label="标题"
-        width="180">
+        width="120">
       </el-table-column>
       <el-table-column
         prop="desc"
+        width="240"
         show-overflow-tooltip
         label="描述">
       </el-table-column>
       <el-table-column
         prop="isShow"
         label="是否显示"
-        width="180">
+        width="120">
       </el-table-column>
-      <el-table-column label="操作">
+      <el-table-column width="220" label="操作">
       <template slot-scope="scope">
         <el-button
           size="mini"
