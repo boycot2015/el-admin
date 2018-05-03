@@ -1,7 +1,7 @@
 <template>
   <div class="root">
     <el-breadcrumb separator-class="el-icon-arrow-right">
-      <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
+      <el-breadcrumb-item :to="{ path: '/blog' }">博客</el-breadcrumb-item>
       <el-breadcrumb-item>分类管理</el-breadcrumb-item>
     </el-breadcrumb>
     <el-table stripe height="500" :data="categoryData" style="width: 100%;overflow-x:scroll;">

@@ -114,6 +114,7 @@ export default {
         this.formData.name = renderData.name;        
         this.upfiles.push({name:renderData.name,url:`${this.$hostname}${renderData.imgUrl[0]}`});
         this.formData.isShow = renderData.isShow;
+        this.formData.date = renderData.time;
       })
     },
     submitForm (formName) {

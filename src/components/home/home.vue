@@ -125,14 +125,25 @@ export default {
     },
     handleDelete (index, row) {
       // console.log(index, row)
-      this.$http.get(`${this.$hostname}/deletebanner?id=${row.Id}`).then(res => {
-        // console.log(res)
-        if(res.data.code===200){
-          this.$router.push('/home');
-        }
-      }).catch(err => {
-        console.log(err)
-      })
+      if(row.typeId==='1'){
+        this.$http.get(`${this.$hostname}/deletenews?id=${row.Id}`).then(res => {
+          // console.log(res)
+          if(res.data.code===200){
+            this.getNewsData()
+          }
+        }).catch(err => {
+          console.log(err)
+        })
+      }else{
+        this.$http.get(`${this.$hostname}/deletebanner?id=${row.Id}`).then(res => {
+          // console.log(res)
+          if(res.data.code===200){
+            this.getBannerData()
+          }
+        }).catch(err => {
+          console.log(err)
+        })
+      }  
     },
     handleShow (index, row) {
       // console.log(index, row)

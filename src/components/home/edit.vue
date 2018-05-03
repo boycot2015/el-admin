@@ -116,6 +116,7 @@ export default {
         this.checked = renderData.isShow==='true'?true:false;        
         this.upfiles.push({name:renderData.name,url:`${this.$hostname}${renderData.imgUrl}`});
         this.formData.isShow = renderData.isShow;
+        this.formData.date = renderData.time;
       })
     },
     submitForm (formName) {
