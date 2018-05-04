@@ -40,24 +40,25 @@
       <el-table-column
         prop="Id"
         label="序号ID"
+         width="120"
         sortable
-        width="80">
+        >
       </el-table-column>
       <el-table-column
         prop="name"
         label="标题"
-        width="120">
+        show-overflow-tooltip
+        >
       </el-table-column>
       <el-table-column
         prop="desc"
-        width="240"
         show-overflow-tooltip
         label="描述">
       </el-table-column>
       <el-table-column
         prop="isShow"
         label="是否显示"
-        width="120">
+        >
       </el-table-column>
       <el-table-column width="220" label="操作">
       <template slot-scope="scope">

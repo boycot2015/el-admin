@@ -38,26 +38,27 @@
       width="55">
       </el-table-column>
       <el-table-column
-        prop="Id"
+        prop="id"
         label="序号ID"
+         width="120"
         sortable
-        width="80">
+        >
       </el-table-column>
       <el-table-column
         prop="name"
         label="标题"
-        width="120">
+        show-overflow-tooltip
+        >
       </el-table-column>
       <el-table-column
         prop="desc"
-        width="240"
         show-overflow-tooltip
         label="描述">
       </el-table-column>
       <el-table-column
         prop="isShow"
         label="是否显示"
-        width="120">
+        >
       </el-table-column>
       <el-table-column width="220" label="操作">
       <template slot-scope="scope">
@@ -82,7 +83,7 @@
 <script>
 
 export default {
-  name: 'HelloWorld',
+  name: 'Home',
   data () {
     return {
       title: '轮播图',
@@ -99,8 +100,9 @@ export default {
       this.$http.get(`${this.$hostname}/getbanner`).then(function (res) {
         // console.log(res.data.bannerData)
         let bannerData = res.data.bannerData
-        bannerData.forEach(el => {
-          el.desc = el.imgUrl
+        bannerData.forEach((el,index) => {
+          el.desc = el.imgUrl;
+          el.id = index+1;
         })
         that.indexData = bannerData
       }).catch(function (res) {
@@ -110,10 +112,11 @@ export default {
     getNewsData () {
       let that = this
       this.$http.get(`${this.$hostname}/getnews`).then(function (res) {
-        // console.log(res.data)
+        console.log(res.data)
         let newsData = res.data.newsData
-        newsData.forEach(el => {
-          el.name = el.title
+        newsData.forEach((el,index) => {
+          el.name = el.title;
+          el.id = index+1;
         })
         that.indexData = newsData
       }).catch(function (res) {

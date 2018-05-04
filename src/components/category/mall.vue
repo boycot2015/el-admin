@@ -7,11 +7,11 @@
     <el-table stripe height="500" :data="categoryData" style="width: 100%;overflow-x:scroll;">
       <el-table-column type="selection" :default-sort="{prop: 'date', order: 'descending'}" width="55">
       </el-table-column>
-      <el-table-column prop="Id" label="序号ID" sortable width="180">
+      <el-table-column prop="Id" label="序号ID" sortable width="120">
       </el-table-column>
-      <el-table-column prop="name" label="标题" width="180">
+      <el-table-column prop="name" label="标题">
       </el-table-column>
-      <el-table-column prop="isShow" label="是否显示" width="180">
+      <el-table-column prop="isShow" label="是否显示">
       </el-table-column>
       <el-table-column label="操作" width="220">
         <template slot-scope="scope">

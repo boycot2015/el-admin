@@ -9,7 +9,7 @@
           <el-option v-for="(item,index) in formData.classfyData" :key="index" :value="item.name"></el-option>
         </el-select>
       </el-form-item>
-      <el-form-item label="发布时间" required>
+      <el-form-item label="发布时间">
         <el-col :span="8">
           <el-form-item prop="date">
             <el-date-picker type="date" placeholder="选择日期" v-model="formData.date" style="width: 100%;"></el-date-picker>
@@ -69,9 +69,6 @@ export default {
         ],
         selected: [
           { required: true, message: '请选择分类', trigger: 'change' }
-        ],
-        date: [
-          { type: 'date', required: true, message: '请选择日期', trigger: 'change' }
         ],
         desc: [
           { message: '请填写描述信息', trigger: 'blur' }
