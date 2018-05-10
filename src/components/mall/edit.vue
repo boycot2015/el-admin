@@ -4,13 +4,12 @@
       <el-form-item label="名称" prop="name">
         <el-input v-model="formData.name" class="name-inp"></el-input>
       </el-form-item>
-      <el-form-item label="分类" prop="classfy">
-        <el-select v-model="formData.classfy" placeholder="请选择分类">
-          <el-option label="轮播图" value="轮播图"></el-option>
-          <el-option label="新闻" value="新闻"></el-option>
+      <el-form-item label="分类" prop="classfyData">
+        <el-select v-model="formData.selected" placeholder="请选择分类">
+          <el-option :label="item.name" :value="item.name" v-for="(item,index) in formData.classfyData" :key="index"></el-option>
         </el-select>
       </el-form-item>
-      <el-form-item label="发布时间" required>
+      <el-form-item label="发布时间">
         <el-col :span="8">
           <el-form-item prop="date">
             <el-date-picker type="date" placeholder="选择日期" v-model="formData.date" style="width: 100%;"></el-date-picker>
@@ -56,7 +55,8 @@ export default {
       upfiles: [],
       formData: {
         name: '',
-        classfy: '',
+        classfyData:[],
+        selected: '',
         date: '',
         delivery: false,
         isShow: false,
@@ -71,9 +71,6 @@ export default {
         classfy: [
           { required: true, message: '请选择分类', trigger: 'change' }
         ],
-        date: [
-          { type: 'date', required: true, message: '请选择日期', trigger: 'change' }
-        ],
         desc: [
           { message: '请填写描述信息', trigger: 'blur' }
         ]
@@ -82,6 +79,7 @@ export default {
   },
   created(){
     if(this.$route.query.id){
+      this.formData.classfyData = [{id:1,name:'手机'},{id:2,name:'配件'}]
       this.getData();
     }
   },
@@ -106,9 +104,9 @@ export default {
           }
         if(renderData.typeId==='5'){
           this.formData.desc = renderData.desc;          
-          this.formData.classfy = '手机';
+          this.formData.selected = '手机';
         }else{
-          this.formData.classfy = '配件';
+          this.formData.selected = '配件';
           this.formData.desc = JSON.parse(renderData.color).data[0].color;          
         }
         this.formData.name = renderData.name;        
